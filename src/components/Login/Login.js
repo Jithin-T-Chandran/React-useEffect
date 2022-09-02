@@ -7,6 +7,8 @@ import Button from "../UI/Button/Button";
 const Login = (props) => {
   const [enteredEmail, setEnteredEmail] = useState("");
   const [emailIsValid, setEmailIsValid] = useState();
+  const [enteredCollege, setEnteredCollege] = useState("");
+  const [collegeIsValid, setCollegeIsValid] = useState();
   const [enteredPassword, setEnteredPassword] = useState("");
   const [passwordIsValid, setPasswordIsValid] = useState();
   const [formIsValid, setFormIsValid] = useState(false);
@@ -15,14 +17,14 @@ const Login = (props) => {
     const identifier = setTimeout(()=>{
       console.log("entering");
       setFormIsValid(
-        enteredEmail.includes("@") && enteredPassword.trim().length > 6
+        enteredEmail.includes("@") && enteredPassword.trim().length > 6 && enteredCollege.trim().length > 0
       )
     },500);
       return ()=>{
         console.log('CLEANUP');
         clearTimeout(identifier);
       }
-  }, [enteredEmail, enteredPassword]);
+  }, [enteredEmail, enteredPassword, enteredCollege]);
 
   const emailChangeHandler = (event) => {
     setEnteredEmail(event.target.value);
@@ -31,6 +33,9 @@ const Login = (props) => {
   const passwordChangeHandler = (event) => {
     setEnteredPassword(event.target.value);
   };
+  const collegeChangeHandler = (event) => {
+    setEnteredCollege(event.target.value);
+  };
 
   const validateEmailHandler = () => {
     setEmailIsValid(enteredEmail.includes("@"));
@@ -38,6 +43,9 @@ const Login = (props) => {
 
   const validatePasswordHandler = () => {
     setPasswordIsValid(enteredPassword.trim().length > 6);
+  };
+  const validateCollegeHandler = () => {
+    setCollegeIsValid(enteredPassword.trim().length > 0);
   };
 
   const submitHandler = (event) => {
@@ -60,6 +68,20 @@ const Login = (props) => {
             value={enteredEmail}
             onChange={emailChangeHandler}
             onBlur={validateEmailHandler}
+          />
+        </div>
+        <div
+          className={`${classes.control} ${
+            collegeIsValid === false ? classes.invalid : ""
+          }`}
+        >
+          <label htmlFor="collegename">College name</label>
+          <input
+            type="text"
+            id="collegename"
+            value={enteredCollege}
+            onChange={collegeChangeHandler}
+            onBlur={validateCollegeHandler}
           />
         </div>
         <div
